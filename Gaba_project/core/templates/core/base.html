@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title %}{%endblock%} | User</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <nav class="bg-zinc-800 p-4 border-b border-gray-200">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="text-white font-bold text-lg">
+                MySite
+            </div>
+            <ul class="flex space-x-6">
+                <li><a href="#" class="text-gray-300 hover:text-white">Home</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-white">About</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-white">Services</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-white">Contact</a></li>
+            </ul>
+            <div class="flex space-x-4">
+                <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sign In</a>
+                <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="px6 py-6">
+        {% block content %}{% endblock %}
+    </div>
+
+<footer class="bg-zinc-800 text-white py-6 flex justify-between mb-2">
+    <div class="container mx-auto px-4 text-center">
+        <div class="mb-4">
+            <a href="{% url 'contact' %}" class="text-gray-300 hover:text-white mx-2">Contact</a>
+            <a href="{% url 'about' %}" class="text-gray-300 hover:text-white mx-2">About</a>
+        </div>
+        <p>&copy; 2023 MySite. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+
+</html>

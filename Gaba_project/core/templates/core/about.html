@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+{% block title %}About{% endblock %}
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-3xl font-bold mb-4">About Us</h1>
+    <p class="mb-4">Welcome to our website! We are dedicated to providing the best service possible.</p>
+    <p>Our mission is to connect people and provide a platform for sharing ideas and resources.</p>
+    <p>We believe in the power of community and strive to create a positive impact in the world.</p>
+    <p>Thank you for visiting our site. We hope you find what you're looking for!</p>
+    <p>If you have any questions or feedback, please feel free to <a href="{% url 'contact' %}" class="text-blue-500 hover:underline">contact us</a>.</p>
+</div>  
+{% endblock %}

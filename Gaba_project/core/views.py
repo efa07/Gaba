@@ -1,5 +1,18 @@
 from django.shortcuts import render
+from items.models import Item,Category
 
 # Create your views here.
 def index(request):
-    return render(request, 'core/index.html')
+    items = Item.objects.all()
+    categories = Category.objects.all()
+    context = {
+        'items': items,
+        'categories': categories
+    }
+    return render(request, 'core/index.html', context)
+
+def contact(request):
+    return render(request, 'core/contact.html')
+
+def about(request):
+    return render(request, 'core/about.html')
