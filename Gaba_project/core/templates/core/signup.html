@@ -1,0 +1,96 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-rose-400 to-blue-500 text-white px-4 rounded-3xl">
+    <div class="w-full max-w-md rounded-2xl shadow-xl p-8 backdrop-blur-md bg-white/10 border border-white/20 animate-fadeIn">
+        <h2 class="text-3xl font-bold mb-6 text-center text-white tracking-wide">
+            Create an Account
+        </h2>
+
+        <form method="POST" action="" class="space-y-5">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div>
+                <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium mb-1">
+                    Username
+                </label>
+                {{ form.username}}
+                {% for error in form.username.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Email (if your form has it) -->
+            {% if form.email %}
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium mb-1">
+                    Email
+                </label>
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Password 1 -->
+            <div>
+                <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium mb-1">
+                    Password
+                </label>
+                {{ form.password1 }}
+                {% for error in form.password1.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Password 2 -->
+            <div>
+                <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium mb-1">
+                    Confirm Password
+                </label>
+                {{ form.password2 }}
+                {% for error in form.password2.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Non-field errors -->
+            {% if form.non_field_errors %}
+            <div class="text-red-500 text-sm">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Submit button -->
+            <div class="pt-2">
+                <button type="submit"
+                        class="w-full py-2.5 bg-white/20 text-white font-semibold rounded-md hover:bg-white/30 transition duration-300 shadow-md backdrop-blur-md">
+                    Sign Up
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.8s ease-out;
+    }
+</style>
+{% endblock content %}

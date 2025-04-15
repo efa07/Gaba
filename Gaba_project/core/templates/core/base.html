@@ -4,42 +4,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{%block title %}{%endblock%} | User</title>
+    <title>{% block title %}{% endblock %} | User</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom hover animation for buttons */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Smooth scroll effect for anchor links */
+        a[href^="#"] {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 
-<body>
-    <nav class="bg-zinc-800 p-4 border-b border-gray-200">
+<body class=" text-black font-sans">
+    <!-- Navbar -->
+    <nav class="bg-zinc-800 p-4 border-b border-gray-700 shadow-lg">
         <div class="container mx-auto flex items-center justify-between">
-            <div class="text-white font-bold text-lg">
+            <div class="text-white font-bold text-lg transition duration-300 hover:text-blue-500">
                 MySite
             </div>
             <ul class="flex space-x-6">
-                <li><a href="#" class="text-gray-300 hover:text-white">Home</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-white">About</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-white">Services</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-white">Contact</a></li>
+                <li><a href="/" class="text-gray-300 hover:text-white transition duration-300">Home</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">About</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">Contact</a></li>
             </ul>
             <div class="flex space-x-4">
-                <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sign In</a>
-                <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Sign Up</a>
+                <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 transform hover:scale-105 fade-in">Sign In</a>
+                <a href="{% url 'core:signup' %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 transform hover:scale-105 fade-in">Sign Up</a>
             </div>
         </div>
     </nav>
 
-    <div class="px6 py-6">
-        {% block content %}{% endblock %}
+    <!-- Main Content -->
+    <div class="px-6 py-12 min-h-screen">
+        <div class="container mx-auto">
+            {% block content %}
+            <div class="text-center fade-in">
+                <h1 class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Welcome to MySite</h1>
+                <p class="text-gray-400 text-lg mb-8">Discover amazing features and services tailored just for you.</p>
+                <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105">Get Started</a>
+            </div>
+            {% endblock %}
+        </div>
     </div>
 
-<footer class="bg-zinc-800 text-white py-6 flex justify-between mb-2">
-    <div class="container mx-auto px-4 text-center">
-        <div class="mb-4">
-            <a href="{% url 'contact' %}" class="text-gray-300 hover:text-white mx-2">Contact</a>
-            <a href="{% url 'about' %}" class="text-gray-300 hover:text-white mx-2">About</a>
+    <!-- Footer -->
+    <footer class="bg-zinc-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4 flex justify-center space-x-4">
+                <a href="{% url 'core:contact' %}" class="text-gray-300 hover:text-white transition duration-300">Contact</a>
+                <a href="{% url 'about' %}" class="text-gray-300 hover:text-white transition duration-300">About</a>
+            </div>
+            <p class="text-gray-400 text-sm">&copy; 2023 MySite. All rights reserved.</p>
         </div>
-        <p>&copy; 2023 MySite. All rights reserved.</p>
-    </div>
-</footer>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 transform hover:scale-110 opacity-0 pointer-events-none" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        ↑
+    </button>
+
+    <script>
+        // Back to Top Button Visibility
+        window.addEventListener('scroll', () => {
+            const button = document.getElementById('back-to-top');
+            if (window.scrollY > 300) {
+                button.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                button.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+    </script>
 </body>
 
 </html>
