@@ -6,93 +6,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} | User</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        /* Custom hover animation for buttons */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
+        @keyframes breathe {
+
+            0%,
+            100% {
+                transform: scale(1);
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            50% {
+                transform: scale(1.05);
             }
         }
 
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        /* Smooth scroll effect for anchor links */
-        a[href^="#"] {
-            scroll-behavior: smooth;
+        .animate-breathe {
+            animation: breathe 3s ease-in-out infinite;
         }
     </style>
+
 </head>
 
-<body class=" text-black font-sans">
+<body class="bg-background text-foreground font-sans">
     <!-- Navbar -->
-    <nav class="bg-zinc-800 p-4 border-b border-gray-700 shadow-lg">
-        <div class="container mx-auto flex items-center justify-between">
-            <div class="text-white font-bold text-lg transition duration-300 hover:text-blue-500">
+    <nav class="sticky top-0 border-b bg-zinc-100 dark:bg-zinc-900">
+        <div class="container mx-auto flex items-center justify-between px-4 py-3">
+            <div class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                 MySite
             </div>
-            <ul class="flex space-x-6">
-                <li><a href="/" class="text-gray-300 hover:text-white transition duration-300">Home</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">About</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">Contact</a></li>
+            <ul class="flex space-x-6 text-sm text-zinc-600 dark:text-zinc-300">
+                <li><a href="/" class="hover:text-primary">Home</a></li>
+                <li><a href="{% url 'items:search' %}" class="hover:text-primary">Search</a></li>
+                <li><a href="/contact" class="hover:text-primary">Contact</a></li>
             </ul>
-            <div class="flex space-x-4">
-                {% if request.user.is_authenticated %}
-                <a href="#" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 transform hover:scale-105 fade-in">Log Out</a>
-                <a href="{% url 'items:new' %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 transform hover:scale-105 fade-in">New Item</a>
-                <a href="{% url 'dashboard:index' %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 transform hover:scale-105 fade-in">Dashboard</a>
-
-                {% else %}
-                <a href="{% url 'core:login' %}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 transform hover:scale-105 fade-in">Sign In</a>
-                <a href="{% url 'core:signup' %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 transform hover:scale-105 fade-in">Sign Up</a>
-                {% endif %}
-            </div>
         </div>
     </nav>
 
+    <!-- Dynamic Island -->
+    <div id="dynamic-island"
+        class="sticky top-2 border-2 border-green-500  group relative z-50 flex items-center justify-between gap-4 mx-auto mt-4 h-12 w-48 group-hover:w-96 rounded-full bg-zinc-800 text-white shadow-xl transition-all duration-500 ease-in-out animate-breathe px-4 overflow-hidden hover:cursor-pointer">
+        <span id="island-text"
+            class="text-sm font-medium whitespace-nowrap transition-all duration-300 group-hover:translate-x-0 text-center">
+            Menu
+        </span>
+        <div class="ml-16" id="star">
+            ✨
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <div
+            class="flex gap-3 opacity-0 scale-90 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-500 ease-in-out">
+            <a href="#" class="bg-red-500 hover:bg-red-700 text-white text-sm py-1.5 px-3 rounded-md">Log Out</a>
+            <a href="{% url 'items:new' %}"
+                class="bg-white hover:bg-gray-100 text-gray-800 text-sm font-medium py-1.5 px-3 border border-gray-300 rounded-md shadow-sm">New</a>
+            <a href="{% url 'dashboard:index' %}"
+                class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-1.5 px-3 rounded-md">Dash</a>
+        </div>
+        {% else %}
+        <div
+            class="flex gap-3 opacity-0 scale-90 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-500 ease-in-out">
+            <a href="{% url 'core:login' %}"
+                class="bg-white hover:bg-gray-100 text-gray-800 text-sm font-medium py-1.5 px-3 border border-gray-300 rounded-md shadow-sm">Log
+                In</a>
+            <a href="{% url 'core:signup' %}"
+                class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-1.5 px-3 rounded-md">Signup</a>
+        </div>
+        {% endif %}
+
+    </div>
+
+
+
     <!-- Main Content -->
-    <div class="px-6 py-12 min-h-screen">
+    <main class="px-6 py-12 min-h-screen">
         <div class="container mx-auto">
             {% block content %}
-            <div class="text-center fade-in">
-                <h1 class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Welcome to MySite</h1>
-                <p class="text-gray-400 text-lg mb-8">Discover amazing features and services tailored just for you.</p>
-                <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105">Get Started</a>
+            <div class="text-center">
+                <h1
+                    class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">
+                    Welcome to MySite</h1>
+                <p class="text-muted-foreground text-lg mb-8">Discover amazing features and services tailored just for
+                    you.</p>
+                <a href="#"
+                    class="inline-flex items-center rounded-md border border-input bg-background px-6 py-3 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground">Get
+                    Started</a>
             </div>
             {% endblock %}
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-zinc-800 text-white py-6">
+    <footer class="border-t text-white bg-zinc-100 dark:bg-zinc-900 py-6">
         <div class="container mx-auto px-4 text-center">
-            <div class="mb-4 flex justify-center space-x-4">
-                <a href="{% url 'core:contact' %}" class="text-gray-300 hover:text-white transition duration-300">Contact</a>
-                <a href="{% url 'about' %}" class="text-gray-300 hover:text-white transition duration-300">About</a>
+            <div class="mb-4 flex justify-center space-x-4 text-sm text-muted-foreground">
+                <a href="{% url 'core:contact' %}" class="hover:text-primary">Contact</a>
+                <a href="{% url 'about' %}" class="hover:text-primary">About</a>
             </div>
-            <p class="text-gray-400 text-sm">&copy; 2023 MySite. All rights reserved.</p>
+            <p class="text-xs text-muted-foreground">&copy; 2023 MySite. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="fixed bottom-6 right-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 transform hover:scale-110 opacity-0 pointer-events-none" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+    <button id="back-to-top"
+        class="fixed bottom-6 right-6 hidden h-10 w-10 items-center justify-center rounded-full border border-input bg-background text-sm text-white font-medium shadow-sm hover:bg-accent hover:text-accent-foreground "
+        onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
         ↑
     </button>
 
+    <!-- dynamic island  -->
     <script>
-        // Back to Top Button Visibility
+        const island = document.getElementById('dynamic-island');
+        const text = document.getElementById('island-text');
+        const star = document.getElementById('star')
+
+        island.addEventListener('mouseenter', () => {
+            text.textContent = 'Actions';
+            island.style.transition = 'width 0.9s ease';
+            island.style.width = '24rem';
+            island.style.height = '55px'
+            star.style.display = "none"
+        });
+
+        island.addEventListener('mouseleave', () => {
+            text.textContent = 'Menu';
+            star.style.display = 'block'
+            island.style.height = '45px'
+            island.style.width = '12rem';
+        });
+    </script>
+
+    <script>
+        // Show Back to Top Button
         window.addEventListener('scroll', () => {
             const button = document.getElementById('back-to-top');
             if (window.scrollY > 300) {
-                button.classList.remove('opacity-0', 'pointer-events-none');
+                button.classList.remove('hidden');
             } else {
-                button.classList.add('opacity-0', 'pointer-events-none');
+                button.classList.add('hidden');
             }
         });
     </script>

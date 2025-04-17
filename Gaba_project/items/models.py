@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    image = models.ImageField(upload_to='category_img/',blank=True,null=True)
 
     class Meta:
         verbose_name_plural = "categories"

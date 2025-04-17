@@ -24,9 +24,20 @@
                 <span class="text-gray-800 font-semibold">{{ item.category.name }}</span>
             </p>
             <p class="text-lg font-medium text-gray-600">is available: {{item.is_available }} </p>
+            {% if request.user == item.created_by %}
+            <div class="mt-6 p-6 bg-gray-200 rounded-lg">
+                <h2 class="text-2xl font-semibold text-gray-800">Your Item</h2>
+                <p class="text-lg text-gray-700">You are the owner of this item.</p>
+                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300">
+                    <a href="{% url 'items:delete' item.id %}">Delete</a>
+                </button>
+                <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300">
+                    <a href="{% url 'items:edit' item.id %}">Update</a>
+            {% else %}
             <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
                 <a href="#">Add to Cart</a>
             </button>
+            {% endif %}
         </div>
 
     </div>
