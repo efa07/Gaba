@@ -52,6 +52,8 @@
             <ul class="space-y-6">
                 {% for item in items %}
                 <li class="bg-white border rounded-2xl shadow-sm p-5 flex items-start gap-5 hover:shadow-md transition duration-300">
+                    <a href="{% url 'items:detail' item.id %}">
+
                     {% if item.image %}
                     <img src="{{ item.image.url }}" alt="{{ item.name }}"
                          class="w-24 h-24 object-cover rounded-xl border">
@@ -63,8 +65,10 @@
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800">{{ item.name }}</h3>
                         <p class="text-sm text-gray-600 mt-1">{{ item.description }}</p>
+                        <p class="text-md font-bold text-green-500 mt-2">$ {{ item.price }}</p>
                     </div>
                 </li>
+                </a>
                 {% endfor %}
             </ul>
             {% else %}

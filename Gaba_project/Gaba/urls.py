@@ -11,4 +11,5 @@ urlpatterns = [
     path('items/', include('items.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('about/', about, name="about"),
+    path('message/', include('message.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

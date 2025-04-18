@@ -6,7 +6,7 @@ from .forms import NewItemForm, EditItemForm
 
 def detail(request,pk):
     item = get_object_or_404(Item, pk=pk)
-    related_items = Item.objects.filter(category = item.category, is_available=True).exclude(pk=item.pk)[0:3]
+    related_items = Item.objects.filter(category = item.category, is_available=True).exclude(pk=item.pk)[0:4]
     context = {
         'item': item,
         'related_items': related_items,
