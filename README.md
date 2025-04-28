@@ -14,6 +14,4 @@ Welcome to **Gaba**, an online marketplace built using Django. This project allo
 ## Technologies Used
 
 - **Backend**: Django (Python)
-- **Frontend**: HTML, CSS, Bootstrap
-- **Database**: SQLite (default), with support for other databases like PostgreSQL
-- **Other Tools**: Django Admin, Django Rest Framework (if applicable)
+- **Frontend**: HTML, jinja, tailwindcss
